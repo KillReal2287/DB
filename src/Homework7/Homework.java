@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class Homework7 {
+public class Homework {
     public static void main(String[] args) {
         ExecutorService exec = Executors.newCachedThreadPool();
         ArrayList<Future<Double>> results = new ArrayList<Future<Double>>();
