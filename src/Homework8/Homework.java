@@ -42,5 +42,6 @@ public class Homework {
             }
         }
         System.out.println(result*4);
+        System.out.println();
     }
 }
