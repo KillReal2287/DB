@@ -1,15 +1,39 @@
 package Homework10;
+
+
 public class Child implements Runnable{
     @Override
-    public void run() {
-        synchronized (this) {
-            for (int i = 0; i < 10; i++) {
+    /*public void run() {
+        for(int i = 0; i<10; i++) {
+            System.out.println("Hello from child");
+            synchronized (this){
                 this.notify();
-                System.out.println("Hello from child");
-                try {
-                    this.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                Parent.queue = false;
+                if(i != 9)
+                    while (!Parent.queue) {
+                        try {
+                            this.wait();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+            }
+        }
+    }*/
+    public void run() {
+        for(int i = 0; i<10; i++) {
+            System.out.println("Hello from child ");
+            synchronized (this){
+                Parent.queue = false;
+                this.notifyAll();
+                if(i != 9) {
+                    while (!Parent.queue) {
+                        try {
+                            this.wait();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
             }
         }

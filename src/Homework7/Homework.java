@@ -7,10 +7,10 @@ import java.util.concurrent.Future;
 
 public class Homework {
     public static void main(String[] args) {
-        ExecutorService exec = Executors.newCachedThreadPool();
         ArrayList<Future<Double>> results = new ArrayList<Future<Double>>();
         double result = 0;
         Integer threads_count = Integer.parseInt(args[0]);
+        ExecutorService exec = Executors.newFixedThreadPool(threads_count);
         Integer iteration_count = 100000;
         Integer repeats = iteration_count/threads_count; //по сколько итераций будет в каждом потоке
         Integer begin = 1;
