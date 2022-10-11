@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Parent{
-    public static boolean queue;
+    public volatile static boolean queue;
 
     public static void main(String[] args) throws InterruptedException {
         Child child = new Child();
