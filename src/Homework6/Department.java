@@ -13,10 +13,10 @@ public class Department {
 
     public void performCalculations() {
         for (int i = 0; i < workingSeconds; i++) {
-            try {
+            /*try {
                 Thread.sleep(TimeUnit.SECONDS.toMillis(1));
             } catch (final InterruptedException ignored) {
-            }
+            }*/
             calculationResult += i;
         }
     }

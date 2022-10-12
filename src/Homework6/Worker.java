@@ -17,7 +17,7 @@ public class Worker implements Runnable{
         try {
             cyclicBarrier.await();
         } catch (InterruptedException | BrokenBarrierException e) {
-            System.err.println("Something wrong");
+            e.printStackTrace();
         }
 
     }
