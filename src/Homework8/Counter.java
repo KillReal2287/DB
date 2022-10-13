@@ -1,27 +1,27 @@
+package Homework8;
+
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Counter implements Callable<Double> {
     double result;
-    private int start;
-    private static int step;
-    private static CyclicBarrier BARRIER;
-    int n; //count of iteration
-    static AtomicInteger maximum_iteration = new AtomicInteger(0);
+    private final long  start;
+    private final long step;
+    private final CyclicBarrier Barrier;
+    long n = Long.MIN_VALUE; //count of iteration
+    static final AtomicLong maximum_iteration = new AtomicLong(Long.MIN_VALUE);
     public volatile static boolean isInterrupted = false;
-    Counter(Integer start, Integer step){
+    Counter(Integer start, Integer step, CyclicBarrier Barrier){
         this.start = start;
-        Counter.step = step;
-        BARRIER = new CyclicBarrier(step);
+        this.step = step;
+        this.Barrier = Barrier;
     }
 
     @Override
     public Double call() throws BrokenBarrierException, InterruptedException {
-        int sign = start % 2 == 0 ? -1 : 1;
+        long sign = start % 2 == 0 ? -1 : 1;
         double i = start;
         while (!isInterrupted) {
             sign = step % 2 == 0 ? sign : -sign;
@@ -29,7 +29,7 @@ public class Counter implements Callable<Double> {
             result += sign*number;
             i += step;
             n++;
-            if (n == Integer.MAX_VALUE){
+            if (n == Long.MAX_VALUE){
                 maximum_iteration.set(n);
                 isInterrupted = true;
                 break;
@@ -42,8 +42,7 @@ public class Counter implements Callable<Double> {
                 maximum_iteration.set(n);
         }
 
-
-        BARRIER.await();
+        Barrier.await();
 
         while (n<maximum_iteration.get()){
             sign = step % 2 == 0 ? sign : -sign;
@@ -53,6 +52,9 @@ public class Counter implements Callable<Double> {
             n++;
         }
 
+        if (step%2 == 1){
+            return -result;
+        }
 
         return result;
     }
